@@ -2,7 +2,9 @@
 
 ## 🎯 Project Overview
 
-This project implements **Scientific Machine Learning (SciML)** approaches for microgrid dynamics modeling, with **completed execution** and **real experimental results**:
+This project implements **Scientific Machine Learning (SciML)** approaches for microgrid dynamics modeling,
+with **completed execution** and **real experimental results**:
+
 
 1. **Bayesian Neural ODE (BNode)**: Replace full ODE with black-box neural networks ✅ **COMPLETED**
 2. **Universal Differential Equation (UDE)**: Replace only β⋅Pgen(t) with neural network ✅ **COMPLETED**
@@ -47,9 +49,9 @@ julia --project=. -e 'using Pkg; Pkg.instantiate()'
 julia --project=. scripts/run_enhanced_pipeline.jl
 ```
 
-**Execution Time**: ~74 minutes (completed)
-- UDE Hyperparameter Tuning: ~37 minutes
-- BNode Training: ~37 minutes
+**Execution Time (actual logs)**:
+- UDE Hyperparameter Tuning: ~30 hours (2,880 configurations)
+- BNode Training: ~37 minutes (500 samples, 2 chains)
 - Final Evaluation: ~10 minutes
 
 ## 📁 Project Structure
@@ -92,58 +94,12 @@ checkpoints/                         # ✅ TRAINED MODELS
 └── bnode_posterior.bson             # BNode posterior samples
 ```
 
-## 🔧 Technical Features
+## 🔎 Current Status (from results)
+- Performance (Test): Physics RMSE x1≈0.105, x2≈0.252 (R² x2≈0.80); UDE RMSE x1≈0.106, x2≈0.248 (R² x2≈0.76)
+- BNode Calibration: under-coverage (50%≈0.5%, 90%≈0.5%), Mean NLL≈2.69e5
+- Symbolic Extraction: cubic fθ(Pgen) with dominant linear term
 
-### **Robust Training** ✅ **COMPLETED**
-- **Stiff ODE Solver**: Rodas5 with adaptive time stepping
-- **Parameter Constraints**: Physics-informed bounds
-- **Regularization**: L2 penalty on neural and physics parameters
-- **Error Handling**: Robust training with scenario validation
-
-### **Research-Grade Evaluation** ✅ **COMPLETED**
-- **Per-Scenario Metrics**: RMSE, MAE, R² per scenario
-- **Uncertainty Calibration**: Coverage (50%, 90%), NLL for BNode
-- **Symbolic Extraction**: Polynomial fitting with R² assessment
-- **Real Data**: All results based on actual experimental data
-
-### **Data Quality** ✅ **COMPLETED**
-- **14,070 Total Points**: 70 scenarios with diverse operating conditions
-- **Complete Variables**: x1, x2, u, d, Pgen, Pload with indicator functions
-- **Physics Parameters**: ηin, ηout, α, γ, β per scenario
-- **Temporal Consistency**: Proper time series structure
-
-## 📊 Current Status
-
-### **✅ COMPLETED**
-- **Objective 1**: BNode implementation with Bayesian framework ✅
-- **Objective 2**: UDE implementation with robust training ✅
-- **Objective 3**: Symbolic extraction methodology ✅
-- **Data Generation**: Screenshot-compliant dataset ✅
-- **ODE Stiffness**: Resolved with Rodas5 solver ✅
-- **UDE Hyperparameter Tuning**: 100 configurations tested ✅
-- **BNode Training**: MCMC sampling with physics priors ✅
-- **Comprehensive Comparison**: All three objectives evaluation ✅
-- **Symbolic Extraction**: fθ(Pgen) polynomial analysis ✅
-- **Publication Figures**: Enhanced figures with real data ✅
-
-### **📈 REAL RESULTS**
-- **Performance (Test)**: Physics RMSE x1≈0.105, x2≈0.252 (R² x2≈0.80); UDE RMSE x1≈0.106, x2≈0.248 (R² x2≈0.76)
-- **BNode Calibration**: under-coverage (50%≈0.5%, 90%≈0.5%), Mean NLL≈2.69e5
-- **Symbolic Extraction**: cubic fθ(Pgen) with dominant linear term
-- **Training Analysis**: UDE search 2,880 configs; best logged in results
-
-## 🎯 Screenshot Compliance
-
-### **100% Alignment with Objectives** ✅ **VERIFIED**
-1. **BNode**: Both equations as black-box neural networks ✅
-2. **UDE**: Only β⋅Pgen(t) replaced with fθ(Pgen(t)) ✅
-3. **Symbolic Extraction**: Polynomial fitting for interpretability ✅
-
-### **Research Quality** ✅ **ACHIEVED**
-- **Per-scenario evaluation**: Novel methodology implemented
-- **Uncertainty quantification**: Bayesian framework with calibration
-- **Parameter constraints**: Physics-informed optimization
-- **Real experimental data**: No simulated/fake results
+Sources: `results/comprehensive_comparison_summary.md`, `results/bnode_calibration_report.md`.
 
 ## 📋 Usage Examples
 
