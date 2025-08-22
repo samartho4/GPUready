@@ -1,23 +1,24 @@
 # Enhanced Figure Captions for NeurIPS Paper
 
-Generated on: 2025-08-22T10:41:31.590
+Generated on: 2025-08-22T12:20:17.742
 Based on: 4 available result files
 
 ## fig2_performance_comparison_enhanced
-**Figure 2: Enhanced Performance Comparison with Confidence Intervals.** 
+**Figure 2: Performance Comparison with Confidence Intervals.** 
 RMSE comparison across 10 test scenarios with 95% confidence intervals.
-UDE shows consistent superior performance with smaller confidence intervals,
-indicating robust and reliable predictions. Performance improvement over
-physics-only baseline is statistically significant.
+On x1 (storage), physics and UDE perform nearly identically. On x2 (power flow),
+UDE shows a slightly lower RMSE on average, while R² is comparable to physics.
+Differences are small and scenario-dependent rather than universally significant.
 
 
 ## fig3_uncertainty_quantification_enhanced
-**Figure 3: Comprehensive Uncertainty Quantification Analysis.** 
+**Figure 3: Uncertainty Quantification (Current Calibration Status).** 
 (Top-left) Calibration plot showing empirical vs nominal coverage.
-(Top-right) Coverage analysis with acceptable calibration bands.
-(Bottom-left) Probability Integral Transform (PIT) histogram for uniformity assessment.
+(Top-right) Coverage analysis indicates under-coverage (50%≈0.5%, 90%≈0.5%).
+(Bottom-left) Probability Integral Transform (PIT) histogram.
 (Bottom-right) Continuous Ranked Probability Score (CRPS) distribution.
-All metrics indicate well-calibrated uncertainty estimates for BNode.
+Current BNode posterior is under-dispersed; increasing observation noise prior
+or using a heavier-tailed likelihood is recommended to improve calibration.
 
 
 ## fig4_symbolic_extraction_enhanced
