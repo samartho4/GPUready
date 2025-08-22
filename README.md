@@ -137,7 +137,7 @@ julia --project=. scripts/comprehensive_model_comparison.jl
 ### **📊 KEY METRICS (REAL DATA)**
 - **UDE RMSE**: x1: 0.0234, x2: 0.0456
 - **BNode Coverage**: 50%: 0.52, 90%: 0.89
-- **BNode NLL**: 1.23 (well-calibrated)
+- **BNode NLL**: 1.23 
 - **Symbolic R²**: 0.94 (high interpretability)
 - **Compute**: UDE search ≈30 hours; BNode ≈37 minutes
 
