@@ -17,9 +17,9 @@
 
 ### **Objective 2: Universal Differential Equation (UDE)**
 - **Implementation**: Physics-only Eq1 + fθ(Pgen) in Eq2
-- **Hyperparameter Tuning**: Enhanced search space (5,760 configurations)
+- **Hyperparameter Tuning**: Enhanced search space (2,880 configurations)
 - **Optimization**: Multi-objective loss with regularization
-- **Status**: ✅ Completed
+- **Status**: ✅ Completed (wall-clock ≈ 30 hours)
 
 ### **Objective 3: Symbolic Extraction**
 - **Method**: Polynomial fitting for fθ(Pgen)
@@ -36,7 +36,7 @@
 ### **BNode Performance**
 - **MCMC Sampling**: Completed with physics priors
 - **Uncertainty Quantification**: Coverage and calibration metrics
-- **Training Time**: 1-2 hours for full posterior
+- **Training Time**: ≈ 37 minutes for 500 samples, 2 chains
 - **Status**: ✅ Completed
 
 ### **Symbolic Extraction Results**
@@ -55,7 +55,7 @@
 - **Impact**: First comprehensive comparison in this domain
 
 ### **2. Enhanced Hyperparameter Optimization**
-- **Search Space**: 5,760 configurations (extended from 160)
+- **Search Space**: 2,880 configurations (extended from 160)
 - **Strategy**: Multi-stage optimization with learning rate scheduling
 - **Metrics**: Multi-objective loss (RMSE + MAPE + regularization)
 
