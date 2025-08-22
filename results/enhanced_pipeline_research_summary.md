@@ -114,7 +114,7 @@
 ## 📊 Success Metrics
 
 ### **Technical Achievements**
-- ✅ **Enhanced Search**: 5,760 vs 160 configurations
+- ✅ **Enhanced Search**: 2,880 vs 160 configurations
 - ✅ **Multi-Objective**: RMSE + MAPE + regularization
 - ✅ **Statistical Rigor**: Bootstrap CIs, multiple seeds
 - ✅ **Research-Grade**: Advanced evaluation metrics

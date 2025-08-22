@@ -1,6 +1,6 @@
 # @title 🚀 Microgrid Bayesian Neural ODE Control - Enhanced Pipeline
 # @markdown ## NeurIPS Submission: UDE vs BNode Comparison
-# @markdown **Enhanced Pipeline with 5,760 Hyperparameter Configurations**
+# @markdown **Enhanced Pipeline with 2,880 Hyperparameter Configurations**
 
 # @markdown ---
 # @markdown ### Setup Instructions:
@@ -73,7 +73,7 @@ print("✅ Files uploaded and organized!")
 
 # @title 🚀 Execute Enhanced Pipeline
 # @markdown This will run your complete enhanced pipeline with:
-# @markdown - Enhanced UDE tuning (5,760 configurations, coarse search: 100)
+# @markdown - Enhanced UDE tuning (2,880 configurations, coarse search: 100)
 # @markdown - BNode training with uncertainty quantification
 # @markdown - Comprehensive model comparison
 # @markdown - Symbolic extraction analysis

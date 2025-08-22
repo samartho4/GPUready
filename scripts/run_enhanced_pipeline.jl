@@ -34,7 +34,7 @@ mkpath(joinpath(@__DIR__, "..", "checkpoints"))
 println("\n🔧 Step 1: Enhanced UDE Hyperparameter Tuning")
 println("-" ^ 50)
 println("Expected time: 2-3 hours")
-println("Search space: 5,760 configurations (coarse search: 100)")
+println("Search space: 2,880 configurations (coarse search: 100)")
 println("Features: Extended hyperparameters, multi-objective optimization")
 
 try
@@ -131,7 +131,7 @@ summary_content = """
 
 ### **Objective 2: Universal Differential Equation (UDE)**
 - **Implementation**: Physics-only Eq1 + fθ(Pgen) in Eq2
-- **Hyperparameter Tuning**: Enhanced search space (5,760 configurations)
+- **Hyperparameter Tuning**: Enhanced search space (2,880 configurations)
 - **Optimization**: Multi-objective loss with regularization
 - **Status**: ✅ Completed
 
@@ -201,7 +201,7 @@ summary_content *= """
 - **Impact**: First comprehensive comparison in this domain
 
 ### **2. Enhanced Hyperparameter Optimization**
-- **Search Space**: 5,760 configurations (extended from 160)
+- **Search Space**: 2,880 configurations (extended from 160)
 - **Strategy**: Multi-stage optimization with learning rate scheduling
 - **Metrics**: Multi-objective loss (RMSE + MAPE + regularization)
 
@@ -260,7 +260,7 @@ summary_content *= """
 ## 📊 Success Metrics
 
 ### **Technical Achievements**
-- ✅ **Enhanced Search**: 5,760 vs 160 configurations
+- ✅ **Enhanced Search**: 2,880 vs 160 configurations
 - ✅ **Multi-Objective**: RMSE + MAPE + regularization
 - ✅ **Statistical Rigor**: Bootstrap CIs, multiple seeds
 - ✅ **Research-Grade**: Advanced evaluation metrics

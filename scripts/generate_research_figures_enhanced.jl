@@ -707,7 +707,7 @@ enhanced_captions = Dict(
     "fig2_performance_comparison_enhanced" => """
     **Figure 2: Enhanced Performance Comparison with Confidence Intervals.** 
     RMSE comparison across 10 test scenarios with 95% confidence intervals.
-    UDE shows consistent superior performance with smaller confidence intervals,
+    Performance differences are small and scenario-dependent,
     indicating robust and reliable predictions. Performance improvement over
     physics-only baseline is statistically significant.
     """,
@@ -718,7 +718,7 @@ enhanced_captions = Dict(
     (Top-right) Coverage analysis with acceptable calibration bands.
     (Bottom-left) Probability Integral Transform (PIT) histogram for uniformity assessment.
     (Bottom-right) Continuous Ranked Probability Score (CRPS) distribution.
-    All metrics indicate well-calibrated uncertainty estimates for BNode.
+    Current BNode calibration shows under-coverage; adjust noise prior or likelihood.
     """,
     
     "fig4_symbolic_extraction_enhanced" => """

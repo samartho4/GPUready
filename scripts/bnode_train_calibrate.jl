@@ -270,13 +270,13 @@ function train_bnode(width::Int=5; n_samples::Int=1000, n_chains::Int=4)
         
         write(io, "## Interpretation\n")
         if cal_metrics.mean_coverage_50 > 0.45 && cal_metrics.mean_coverage_50 < 0.55
-            write(io, "- ✅ 50% coverage is well-calibrated\n")
+            write(io, "- ✅ 50% coverage is under-calibrated\n")
         else
             write(io, "- ⚠️ 50% coverage may need adjustment\n")
         end
         
         if cal_metrics.mean_coverage_90 > 0.85 && cal_metrics.mean_coverage_90 < 0.95
-            write(io, "- ✅ 90% coverage is well-calibrated\n")
+            write(io, "- ✅ 90% coverage is under-calibrated\n")
         else
             write(io, "- ⚠️ 90% coverage may need adjustment\n")
         end

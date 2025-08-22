@@ -82,7 +82,7 @@ seeds = 1:5                  # Random seeds
 | **Solver Tolerance** | [1e-5,1e-6] | [1e-4,1e-5,1e-6,1e-7] | Numerical precision |
 | **Seeds** | 5 | 10 | Statistical robustness |
 
-**Enhanced Total**: 6 × 6 × 4 × 4 × 10 = **5,760 configurations**
+**Enhanced Total**: 6 × 6 × 4 × 4 × 10 = **2,880 configurations**
 
 ### **2. Advanced Optimization Strategies**
 

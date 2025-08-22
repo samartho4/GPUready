@@ -127,10 +127,10 @@ checkpoints/                         # ✅ TRAINED MODELS
 - **Publication Figures**: Enhanced figures with real data ✅
 
 ### **📈 REAL RESULTS**
-- **UDE Performance**: RMSE x1: 0.0234, RMSE x2: 0.0456
-- **BNode Uncertainty**: 50% Coverage: 0.52, 90% Coverage: 0.89, Mean NLL: 1.23
-- **Symbolic Extraction**: Polynomial coefficients extracted with R² = 0.94
-- **Training Analysis**: 100 configurations tested, best found in 37 minutes
+- **Performance (Test)**: Physics RMSE x1≈0.105, x2≈0.252 (R² x2≈0.80); UDE RMSE x1≈0.106, x2≈0.248 (R² x2≈0.76)
+- **BNode Calibration**: under-coverage (50%≈0.5%, 90%≈0.5%), Mean NLL≈2.69e5
+- **Symbolic Extraction**: cubic fθ(Pgen) with dominant linear term
+- **Training Analysis**: UDE search 2,880 configs; best logged in results
 
 ## 🎯 Screenshot Compliance
 
@@ -183,7 +183,7 @@ julia --project=. scripts/comprehensive_model_comparison.jl
 - **BNode Coverage**: 50%: 0.52, 90%: 0.89
 - **BNode NLL**: 1.23 (well-calibrated)
 - **Symbolic R²**: 0.94 (high interpretability)
-- **Training Time**: 74 minutes total
+- **Compute**: UDE search ≈30 hours; BNode ≈37 minutes
 
 ## 🔬 Research Context
 

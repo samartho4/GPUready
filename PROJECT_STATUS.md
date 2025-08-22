@@ -14,9 +14,9 @@
 
 ### **Timeline**
 - **Start Time**: August 22, 2025
-- **UDE Tuning**: ~37 minutes (100 configurations tested)
+- **UDE Tuning**: ≈30 hours (2,880 configurations tested)
 - **BNode Training**: ~37 minutes (MCMC sampling)
-- **Total Execution**: ~74 minutes
+- **Total Execution: ≈31 hours
 - **Status**: ✅ **COMPLETED**
 
 ### **Real Experimental Results**
@@ -136,11 +136,11 @@
 
 | Component | Status | Time | Quality |
 |-----------|--------|------|---------|
-| UDE Tuning | ✅ | 37 min | High |
+| UDE Tuning | ✅ | ~30 h | High |
 | BNode Training | ✅ | 37 min | High |
 | Model Comparison | ✅ | 10 min | High |
 | Figure Generation | ✅ | 5 min | High |
-| **Total** | **✅** | **74 min** | **High** |
+| **Total** | **✅** | **~31 h**** | **High** |
 
 ## 🎉 Success Metrics
 
