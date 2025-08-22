@@ -52,14 +52,22 @@ end
 
 ckpt_data = BSON.load(ude_ckpt)
 
-ude_params::Vector{Float64}
-ude_width::Int
+ude_params = Vector{Float64}()
+ude_width = 5
 if haskey(ckpt_data, :best_ckpt)
-    ude_params = ckpt_data[:best_ckpt][:p]
-    ude_width = ckpt_data[:best_ckpt][:width]
-else
+    # Support both flat vector checkpoints and structured ones
+    if ckpt_data[:best_ckpt] isa Vector{Float64}
+        ude_params = ckpt_data[:best_ckpt]
+        ude_width = haskey(ckpt_data, :best_cfg) ? ckpt_data[:best_cfg][1] : 5
+    else
+        ude_params = ckpt_data[:best_ckpt][:p]
+        ude_width = ckpt_data[:best_ckpt][:width]
+    end
+elseif haskey(ckpt_data, :ude_params_opt)
     ude_params = ckpt_data[:ude_params_opt]
     ude_width = 5
+else
+    error("UDE checkpoint missing parameters")
 end
 
 function ftheta_ude(Pgen::Float64, θ::Vector{Float64}, width::Int)

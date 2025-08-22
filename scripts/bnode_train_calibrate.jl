@@ -61,7 +61,7 @@ function build_bnode_theta(width::Int)
     return total_params
 end
 
-function ftheta1(x1::Float64, x2::Float64, u::Float64, d::Float64, θ::Vector{Float64}, width::Int)
+function ftheta1(x1, x2, u, d, θ, width::Int)
     # Eq1: fθ1(x1, x2, u, d) → dx1/dt
     start_idx = 1
     W1 = reshape(θ[start_idx:start_idx+width*4-1], width, 4)
@@ -71,7 +71,7 @@ function ftheta1(x1::Float64, x2::Float64, u::Float64, d::Float64, θ::Vector{Fl
     return sum(h)
 end
 
-function ftheta2(x1::Float64, x2::Float64, Pgen::Float64, Pload::Float64, θ::Vector{Float64}, width::Int)
+function ftheta2(x1, x2, Pgen, Pload, θ, width::Int)
     # Eq2: fθ2(x1, x2, Pgen, Pload) → dx2/dt
     start_idx = 1 + width*4 + width  # Skip Eq1 parameters
     W2 = reshape(θ[start_idx:start_idx+width*4-1], width, 4)
@@ -81,7 +81,7 @@ function ftheta2(x1::Float64, x2::Float64, Pgen::Float64, Pload::Float64, θ::Ve
     return sum(h)
 end
 
-function make_bnode_rhs(θ::Vector{Float64}, width::Int, T, sdf)
+function make_bnode_rhs(θ, width::Int, T, sdf)
     function rhs!(du, x, p, t)
         x1, x2 = x
         idx = clamp(searchsortedlast(T, t), 1, length(T))
@@ -97,7 +97,7 @@ function make_bnode_rhs(θ::Vector{Float64}, width::Int, T, sdf)
     return rhs!
 end
 
-function solve_scenario(θ::Vector{Float64}, width::Int, sdf::DataFrame)
+function solve_scenario(θ, width::Int, sdf::DataFrame)
     T = Vector{Float64}(sdf.time)
     Y = Matrix(sdf[:, [:x1, :x2]])
     rhs! = make_bnode_rhs(θ, width, T, sdf)
@@ -129,8 +129,30 @@ end
         Yhat = solve_scenario(θ, width, sdf)
         if Yhat !== nothing
             Y = Matrix(sdf[:, [:x1, :x2]])
-            for i in 1:size(Y, 1), j in 1:size(Y, 2)
-                Yhat[i, j] ~ Normal(Y[i, j], σ)
+            # Vectorized likelihood for efficiency with unique variable names
+            Y_vec = vec(Y)
+            Yhat_vec = vec(Yhat)
+            # Use scenario ID to create unique variable names
+            if sid == 1
+                Y_scenario_1 ~ MvNormal(Yhat_vec, σ)
+            elseif sid == 2
+                Y_scenario_2 ~ MvNormal(Yhat_vec, σ)
+            elseif sid == 3
+                Y_scenario_3 ~ MvNormal(Yhat_vec, σ)
+            elseif sid == 4
+                Y_scenario_4 ~ MvNormal(Yhat_vec, σ)
+            elseif sid == 5
+                Y_scenario_5 ~ MvNormal(Yhat_vec, σ)
+            elseif sid == 6
+                Y_scenario_6 ~ MvNormal(Yhat_vec, σ)
+            elseif sid == 7
+                Y_scenario_7 ~ MvNormal(Yhat_vec, σ)
+            elseif sid == 8
+                Y_scenario_8 ~ MvNormal(Yhat_vec, σ)
+            elseif sid == 9
+                Y_scenario_9 ~ MvNormal(Yhat_vec, σ)
+            elseif sid == 10
+                Y_scenario_10 ~ MvNormal(Yhat_vec, σ)
             end
         end
     end

@@ -13,12 +13,22 @@ Enhanced complete pipeline for NeurIPS submission with research-grade implementa
 Expected time: 3-4 hours total
 """
 
-using Pkg
+using Pkg, Dates
 Pkg.activate(".")
 
 println("🚀 Enhanced Complete Pipeline for NeurIPS Submission")
 println("=" ^ 60)
 println("📅 Started: $(Dates.format(now(), "yyyy-mm-dd HH:MM:SS"))")
+
+# Ensure output directories exist
+let res_dir = joinpath(@__DIR__, "..", "results"), ckpt_dir = joinpath(@__DIR__, "..", "checkpoints")
+    if !isdir(res_dir); mkpath(res_dir); end
+    if !isdir(ckpt_dir); mkpath(ckpt_dir); end
+end
+
+# Ensure output directories exist
+mkpath(joinpath(@__DIR__, "..", "results"))
+mkpath(joinpath(@__DIR__, "..", "checkpoints"))
 
 # Step 1: Enhanced UDE Hyperparameter Tuning (prefer CORRECTED, fallback to enhanced)
 println("\n🔧 Step 1: Enhanced UDE Hyperparameter Tuning")
@@ -77,7 +87,11 @@ catch e
     if isfile(joinpath(@__DIR__, "..", "checkpoints", "enhanced_ude_best.bson"))
         BSON.@load joinpath(@__DIR__, "..", "checkpoints", "enhanced_ude_best.bson") best_ckpt best_cfg best_metrics
         println("📈 Best UDE Results:")
-        println("  Configuration: width=$(best_cfg[1]), λ=$(best_cfg[2]), lr=$(best_cfg[3]), reltol=$(best_cfg[4]), seed=$(best_cfg[5])")
+        if best_cfg === nothing
+            println("  No valid configuration summary available")
+        else
+            println("  Configuration: width=$(best_cfg[1]), λ=$(best_cfg[2]), lr=$(best_cfg[3]), reltol=$(best_cfg[4]), seed=$(best_cfg[5])")
+        end
         
         # Calculate summary statistics
         rmse_x1_mean = mean(best_metrics.rmse_x1)
@@ -143,14 +157,24 @@ if isfile(joinpath(@__DIR__, "..", "checkpoints", "enhanced_ude_best.bson"))
     r2_x1_mean = mean(best_metrics.r2_x1)
     r2_x2_mean = mean(best_metrics.r2_x2)
     
-    summary_content *= """
-- **Best Configuration**: width=$(best_cfg[1]), λ=$(best_cfg[2]), lr=$(best_cfg[3]), reltol=$(best_cfg[4]), seed=$(best_cfg[5])
-- **RMSE x1**: $(round(rmse_x1_mean, digits=4))
-- **RMSE x2**: $(round(rmse_x2_mean, digits=4))
-- **R² x1**: $(round(r2_x1_mean, digits=4))
-- **R² x2**: $(round(r2_x2_mean, digits=4))
-- **Configurations Tested**: 100 (coarse search from 5,760 total)
+    if best_cfg === nothing
+        summary_content *= """
+- Best configuration: not available (no valid config found in coarse search)
+- RMSE x1: $(round(rmse_x1_mean, digits=4))
+- RMSE x2: $(round(rmse_x2_mean, digits=4))
+- R² x1: $(round(r2_x1_mean, digits=4))
+- R² x2: $(round(r2_x2_mean, digits=4))
 """
+    else
+        summary_content *= """
+- Best Configuration: width=$(best_cfg[1]), λ=$(best_cfg[2]), lr=$(best_cfg[3]), reltol=$(best_cfg[4]), seed=$(best_cfg[5])
+- RMSE x1: $(round(rmse_x1_mean, digits=4))
+- RMSE x2: $(round(rmse_x2_mean, digits=4))
+- R² x1: $(round(r2_x1_mean, digits=4))
+- R² x2: $(round(r2_x2_mean, digits=4))
+- Configurations Tested: 100 (coarse search)
+"""
+    end
 end
 
 summary_content *= """

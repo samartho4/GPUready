@@ -26,6 +26,10 @@ using LinearAlgebra
 println("🚀 Enhanced UDE Hyperparameter Tuning")
 println("=" ^ 50)
 
+# Ensure output directories exist
+mkpath(joinpath(@__DIR__, "..", "results"))
+mkpath(joinpath(@__DIR__, "..", "checkpoints"))
+
 # Load data
 train_csv = joinpath(@__DIR__, "..", "data", "training_roadmap.csv")
 val_csv   = joinpath(@__DIR__, "..", "data", "validation_roadmap.csv")
@@ -93,7 +97,7 @@ function eval_scenario_enhanced(params, width::Int, reltol::Float64, sdf::DataFr
         end
         
         prob = ODEProblem(rhs!, x0, (minimum(T), maximum(T)))
-        sol = solve(prob, Rosenbrock23(); saveat=T, abstol=reltol*0.1, reltol=reltol, maxiters=1000)
+        sol = solve(prob, Rosenbrock23(); saveat=T, abstol=reltol*0.1, reltol=reltol, maxiters=20000)
         
         if sol.retcode != :Success
             return Dict("rmse_x1" => Inf, "rmse_x2" => Inf, "r2_x1" => -Inf, "r2_x2" => -Inf,
@@ -323,9 +327,13 @@ BSON.@save joinpath(@__DIR__, "..", "checkpoints", "enhanced_ude_best.bson") bes
 
 # Generate enhanced summary
 println("📈 Enhanced Tuning Summary:")
-println("  Best configuration: width=$(best_cfg[1]), λ=$(best_cfg[2]), lr=$(best_cfg[3]), reltol=$(best_cfg[4]), seed=$(best_cfg[5])")
-println("  Best score: $(round(best_score, digits=4))")
 println("  Configurations tested: $coarse_configs")
+if best_cfg === nothing
+    println("  ⚠️  No valid configuration found during coarse search. Check data/solver tolerances.")
+else
+    println("  Best configuration: width=$(best_cfg[1]), λ=$(best_cfg[2]), lr=$(best_cfg[3]), reltol=$(best_cfg[4]), seed=$(best_cfg[5])")
+    println("  Best score: $(round(best_score, digits=4))")
+end
 
 # Enhanced results analysis
 if best_metrics !== nothing

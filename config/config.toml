@@ -1,0 +1,31 @@
+[train]
+subset_size = 10000
+samples = 3000
+warmup = 800
+
+[tuning]
+samples = 500
+warmup = 100
+max_points = 400
+sigma_theta = [0.1, 0.2, 0.3]
+init_schemes = ["random", "zeros"]
+init_scale = [0.05, 0.1, 0.2]
+nuts_target = [0.65]
+max_depth = 12
+
+[solver]
+abstol = 1e-8
+reltol = 1e-8
+
+[model]
+arch = "baseline_bias"  # options: baseline, baseline_bias, deep
+
+[paths]
+figures_dir = "paper/figures"
+results_dir = "paper/results"
+
+[data]
+scenario_disjoint = false
+train_scenarios = []
+test_scenarios = []
+ood_scenarios = [] 

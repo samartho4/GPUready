@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - Name: "Samarth Sharma"
+    orcid: "  "
+title: "Microgrid Bayesian Neural ODE Control"
+version: 1.0.0
+doi: "10.5281/zenodo."
+date-released: 
+url: "https://github.com/samartho4/microgrid-bayesian-neural-ode-control"
+repository-code: "https://github.com/samartho4/microgrid-bayesian-neural-ode-control"
+license: MIT
+keywords:
+  - "bayesian neural networks"
+  - "neural ordinary differential equations"
+  - "microgrid control"
+  - "uncertainty quantification"
+  - "julia"
+  - "turing"
+  - "differential equations" 

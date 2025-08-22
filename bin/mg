@@ -1,0 +1,106 @@
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$ROOT_DIR"
+
+usage(){
+  cat <<EOF
+mg - Microgrid project task runner
+
+Usage:
+  mg setup           # resolve deps, build, test
+  mg data            # regenerate datasets and hashes
+  mg tune            # run hyperparameter tuning
+  mg train           # train models (uses config if present)
+  mg eval            # evaluate models on test set
+  mg stats           # statistical validation summary
+  mg baselines       # run baseline adapters and save CSV
+  mg dataset         # dataset scaling & validation analysis
+  mg bench           # computational benchmarks
+  mg verify          # run verification suite
+  mg results         # regenerate results summary
+  mg figs            # regenerate figures
+  mg repro           # full reproduction (data->train->eval->results->figs->verify)
+  mg determinism     # validate determinism across multiple seeds
+  mg generalization  # run generalization study (OOD, horizon, data-size curves)
+  mg ablations       # UDE stability & ablation studies
+  mg symbolic        # enhanced symbolic regression with validation
+  mg forensics       # error forensics & failure analysis
+
+Env overrides are respected (see scripts for details).
+EOF
+}
+
+cmd=${1:-help}
+shift || true
+
+case "$cmd" in
+  setup)
+    julia --project=. -e 'using Pkg; Pkg.resolve(); Pkg.instantiate(); Pkg.precompile()'
+    julia --project=. -e 'using Pkg; Pkg.test()'
+    ;;
+  data)
+    julia --project=. scripts/generate_dataset.jl "$@"
+    if [ -f data/train_improved.csv ]; then
+      cp data/train_improved.csv data/training_dataset.csv
+      cp data/val_improved.csv   data/validation_dataset.csv
+      cp data/test_improved.csv  data/test_dataset.csv
+    fi
+    (cd data && shasum *.csv scenarios/*/*.csv > hashes.txt)
+    echo "✅ Data regenerated and hashes written to data/hashes.txt"
+    ;;
+  comprehensive_data)
+    julia --project=. scripts/generate_comprehensive_dataset.jl "$@"
+    (cd data && shasum *.csv scenarios/*/*.csv > comprehensive_hashes.txt)
+    echo "✅ Comprehensive data generated and hashes written to data/comprehensive_hashes.txt"
+    ;;
+  expand_data)
+    julia --project=. scripts/expand_existing_data.jl "$@"
+    (cd data && shasum *.csv scenarios/*/*.csv > expanded_hashes.txt)
+    echo "✅ Expanded data generated and hashes written to data/expanded_hashes.txt"
+    ;;
+  tune)      julia --project=. scripts/hparam_tuning.jl "$@" ;;
+  train)     julia --project=. scripts/train.jl "$@" ;;
+
+
+  simple_eval) julia --project=. scripts/simple_model_comparison.jl "$@" ;;
+
+
+  stats)     julia --project=. scripts/statistical_validation.jl "$@" ;;
+  baselines) julia --project=. scripts/comprehensive_baselines.jl "$@" ;;
+  dataset)   julia --project=. scripts/dataset_analysis.jl "$@" ;;
+  bench)     julia --project=. scripts/computational_benchmarks.jl "$@" ;;
+  verify)    julia --project=. scripts/verify_results.jl "$@" ;;
+  results)   julia --project=. scripts/generate_results_summary.jl "$@" ;;
+  figs)      julia --project=. scripts/generate_figures.jl "$@" ;;
+  repro)
+    set -x
+    "$0" data
+    "$0" train
+    "$0" eval
+    "$0" stats
+    "$0" baselines
+    "$0" dataset
+    "$0" results
+    "$0" figs
+    "$0" bench
+    "$0" verify
+    set +x
+    ;;
+  determinism)
+    julia --project=. scripts/determinism_check.jl "$@"
+    ;;
+  generalization)
+    julia --project=. scripts/generalization_study.jl "$@"
+    ;;
+  ablations)
+    julia --project=. scripts/ude_stability_ablations.jl "$@"
+    ;;
+  symbolic)
+    julia --project=. scripts/enhanced_symbolic_regression.jl "$@"
+    ;;
+  forensics)
+    julia --project=. scripts/error_forensics.jl "$@"
+    ;;
+  *) usage ;;
+ esac 
